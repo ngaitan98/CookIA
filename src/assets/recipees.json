@@ -1,0 +1,108 @@
+{"data" :[{
+    "name" : "Huevos Rancheros",
+    "minTime" : 20,
+    "maxTime" : 25,
+    "img" : "assets/imgs/HuevosRancheros.jpg",
+    "dificultad" : "Baja",
+    "likes" : 6,
+    "comments" : [
+        {
+            "msg" : "Muy rica"
+        },
+        {
+            "msg" : "Perfecto para cuando halla afán"
+        },
+        {
+            "msg" : "Balanceado"
+        },
+        {
+            "msg" : "Muy Simple"
+        }
+    ],
+    "ingredients" : [
+        {
+            "name" : "Huevo",
+            "quantity" : "2",
+            "units" : "u"
+        },
+        {
+            "name" : "Salchicha",
+            "quantity" : "6",
+            "units" : "u"
+        },
+        {
+            "name" : "Cebolla",
+            "quantity" : "1/2",
+            "units" : "u"
+        },
+        {
+            "name" : "Tomate",
+            "quantity" : "1",
+            "units" : "u"
+        },
+        {
+            "name" : "Comino",
+            "quantity" : "2",
+            "units" : "tsp"
+        },
+        {
+            "name" : "Tortillas",
+            "quantity" : "2",
+            "units" : "u"
+        }
+    ],
+    "procedimiento" : [
+        {"p": "Troceamos muy finito la cebolla y el tomate. Lo ponemos todo en una sartén con un chorro de aceite caliente y lo sofreímos lentamente. En mitad de la cocción añadimos la cucharadita de salsa de chile, la pizca de sal y de sal de ajo. Revolvemos de vez en cuando. Cuando este en el punto de cocción que más nos guste, lo retiramos y reservamos caliente."},
+        {"p": "En otra sartén, ponemos unas gotas de aceite de oliva, la calentamos y doramos las tortillas, una a una, por ambas caras. Las retiramos y las reservamos en caliente."},
+        {"p": "En otra sartén freímos los dos huevos. Ya tenemos todos los ingredientes listos para montar nuestro plato."}
+    ]   
+},{
+    "name" : "Grilled Cheese Sandwich",
+    "minTime" : 10,
+    "maxTime" : 20,
+    "img" : "assets/imgs/GrilledCheese.jpeg",
+    "dificultad" : "Baja",
+    "likes" : 12,
+    "comments" :[
+        {
+            "msg" : "Muy fácil"
+        },
+        {
+            "msg" : "Excelente para el guayabo"
+        },
+        {
+            "msg" : "Buen Antojo"
+        }
+    ],
+    "ingredients" : [
+        {
+            "name" : "Queso Mozarella",
+            "quantity" : "4",
+            "units" : "tajadas"
+        },
+        {
+            "name" : "Pan",
+            "quantity" : "2",
+            "units" : "tajadas"
+        },
+        {
+            "name" : "Queso Sabana",
+            "quantity" : "4",
+            "units" : "tajadas"
+        },
+        {
+            "name" : "Queso Fondue",
+            "quantity" : "4",
+            "units" : "tajadas"
+        },
+        {
+            "name" : "Comino",
+            "quantity" : "1",
+            "units" : "cucharada"
+        }
+    ],
+    "procedimiento" : [
+        {"p" : "Hey"}
+    ]
+}]
+}

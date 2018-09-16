@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{selectedItem.name}}</ion-title>
+  </ion-navbar>
+  <ion-searchbar></ion-searchbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <h3 text-center *ngIf="selectedItem">
+      <img src="{{selectedItem.img}}" style="width:75%">
+    </h3>
+    <ion-row>
+      <ion-col col-1></ion-col>
+      <ion-col col-10>
+        <h4>
+          Ingredientes:
+        </h4>
+        <p *ngFor="let ingredient of selectedItem.ingredients">
+          - {{ingredient.quantity}} {{ingredient.units}} de {{ingredient.name}}
+        </p>
+        <h4>
+          Preparación:
+        </h4>
+        <p *ngFor = "let p of selectedItem.procedimiento">
+          {{p.p}}
+        </p>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-card>
+      <ion-row>
+        <ion-col col-1></ion-col>
+        <ion-col col-5>
+          <button ion-button icon-start clear small>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>{{selectedItem.likes}} Likes</div>
+          </button>
+        </ion-col>
+        <ion-col col-5>
+          <button ion-button icon-start clear small>
+            <ion-icon name="text"></ion-icon>
+            <div>{{selectedItem.comments.length}} Comments</div>
+          </button>
+        </ion-col>
+        <ion-col col-1></ion-col>
+      </ion-row>
+      <ion-list>
+        <ion-item *ngFor = "let comment of selectedItem.comments">
+          <ion-icon name = "person"></ion-icon>
+          Usuario
+          <p>{{comment.msg}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </ion-grid>
+</ion-content>
