@@ -24,36 +24,46 @@
         <h4>
           Preparación:
         </h4>
-        <p *ngFor = "let p of selectedItem.procedimiento">
+        <p *ngFor="let p of selectedItem.procedimiento" text-justify>
           {{p.p}}
         </p>
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
-    <ion-card>
-      <ion-row>
-        <ion-col col-1></ion-col>
-        <ion-col col-5>
-          <button ion-button icon-start clear small>
-            <ion-icon name="thumbs-up"></ion-icon>
-            <div>{{selectedItem.likes}} Likes</div>
-          </button>
-        </ion-col>
-        <ion-col col-5>
-          <button ion-button icon-start clear small>
-            <ion-icon name="text"></ion-icon>
-            <div>{{selectedItem.comments.length}} Comments</div>
-          </button>
-        </ion-col>
-        <ion-col col-1></ion-col>
-      </ion-row>
-      <ion-list>
-        <ion-item *ngFor = "let comment of selectedItem.comments">
-          <ion-icon name = "person"></ion-icon>
-          Usuario
-          <p>{{comment.msg}}</p>
-        </ion-item>
-      </ion-list>
-    </ion-card>
+    <ion-list inset>
+      <ion-item-divider color="light">
+        <ion-row>
+          <ion-col col-1></ion-col>
+          <ion-col col-5>
+            <button ion-button icon-start clear small>
+              <ion-icon name="thumbs-up"></ion-icon>
+              <div>{{selectedItem.likes}} Likes</div>
+            </button>
+          </ion-col>
+          <ion-col col-5>
+            <button ion-button icon-start clear small>
+              <ion-icon name="text"></ion-icon>
+              <div>{{selectedItem.comments.length}} Comments</div>
+            </button>
+          </ion-col>
+          <ion-col col-1></ion-col>
+        </ion-row>
+      </ion-item-divider>
+      <ion-item *ngFor="let comment of selectedItem.comments" color="light">
+        <ion-icon name="person"></ion-icon>
+        Usuario
+        <p>{{comment.msg}}</p>
+      </ion-item>
+    </ion-list>
   </ion-grid>
 </ion-content>
+<ion-footer>
+  <ion-navbar>
+    <button ion-button (click)="presentPopover($event)" float-right clear>
+      <ion-icon name="ios-mic"></ion-icon>
+    </button>
+    <button ion-button (click)="presentMartha()" float-right clear>
+      <ion-icon name="md-chatboxes"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-footer>

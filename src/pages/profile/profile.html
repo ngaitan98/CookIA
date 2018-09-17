@@ -1,22 +1,47 @@
 <ion-header>
-    <ion-navbar>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Perfil</ion-title>
-    </ion-navbar>
-    <ion-searchbar></ion-searchbar>
- </ion-header>
- <ion-content>
-   <h3 text-center>
-     Nombre
-     <img src = "person">
-   </h3>
- </ion-content>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Perfil</ion-title>
+  </ion-navbar>
+  <ion-searchbar></ion-searchbar>
+</ion-header>
+<ion-content>
+  <h3 text-center>
+    Nicolás
+  </h3>
+  <h3 text-center>
+    <img src="assets/imgs/Profile.png" style="width: 50%">
+  </h3>
+  <p text-center>
+    <ion-icon name="pin"> Bogotá, Colombia </ion-icon>
+  </p>
+  <ion-list>
+    <ion-item>
+      Usuario: ngaitan98
+    </ion-item>
+    <ion-item>
+      Nombre: Nicolás Gaitán Escobar
+    </ion-item>
+    <ion-item>
+      Correo: n.gaitan@uniandes.edu.co
+    </ion-item>
+    <ion-item>
+      Teléfono: +57 3103390501
+    </ion-item>
+    <ion-item>
+      Gustos: Postres, dulces, express...
+    </ion-item>
+  </ion-list>
+</ion-content>
 <ion-footer>
-    <ion-navbar>
-    <button ion-button menuToogle>
-      <ion-icon name="wifi"></ion-icon>
+  <ion-navbar>
+    <button ion-button (click)="presentPopover($event)" float-right clear>
+      <ion-icon name="ios-mic"></ion-icon>
+    </button>
+    <button ion-button (click) = "presentMartha()" float-right clear>
+      <ion-icon name="md-chatboxes"></ion-icon>
     </button>
   </ion-navbar>
 </ion-footer>

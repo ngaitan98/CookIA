@@ -7,7 +7,6 @@ import { ProfilePage } from '../pages/profile/profile';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-
 @Component({
   templateUrl: 'app.html'
 })
@@ -23,7 +22,7 @@ export class MyApp {
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen
-  ) {
+    ) {
     this.initializeApp();
 
     // set our app's pages
