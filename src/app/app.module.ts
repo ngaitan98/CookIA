@@ -9,6 +9,7 @@ import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ProfilePage } from '../pages/profile/profile';
 import { ListeningPage } from '../pages/martha/listening';
 import { TextModalPage } from '../pages/martha/text';
+import { FilterPage } from '../pages/hello-ionic/filters'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,7 +21,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ItemDetailsPage,
     ProfilePage,
     TextModalPage,
-    ListeningPage
+    ListeningPage,
+    FilterPage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ItemDetailsPage,
     ProfilePage,
     TextModalPage,
-    ListeningPage
+    ListeningPage,
+    FilterPage
   ],
   providers: [
     StatusBar,

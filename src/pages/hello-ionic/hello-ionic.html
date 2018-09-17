@@ -5,7 +5,15 @@
     </button>
     <ion-title text-center>Cooking Martha</ion-title>
   </ion-navbar>
-  <ion-searchbar></ion-searchbar>
+  <ion-row>
+      <ion-col col-9>
+          <ion-searchbar></ion-searchbar>
+      </ion-col>
+     <ion-col col-2>
+        <button ion-button color = "secondary" small (click) = "presentFiletrs($event)">
+          <ion-icon name = "options"></ion-icon> Filtros</button>
+     </ion-col>
+  </ion-row>
 </ion-header>
 <ion-content>
     <ion-card *ngFor="let item of items">
