@@ -4,53 +4,29 @@
             Close
         </button>
         <ion-title text-center>
-            Hablemos
+            Martha
         </ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-list inset>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/Profile.png">
-            </ion-avatar>
-            <h2>Usuario</h2>
-            <p text-left>Hola</p>
-        </ion-item>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/Martha.png">
-            </ion-avatar>
-            <h2>Martha</h2>
-            <p text-left>Hola. ¿Cómo vas?</p>
-        </ion-item>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/Profile.png">
-            </ion-avatar>
-            <h2>Usuario</h2>
-            <p text-left>Muy Bien. Martha, sabes qué quiere decir sofreir</p>
-        </ion-item>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/Martha.png">
-            </ion-avatar>
-            <h2>Martha</h2>
-            <p text-left>Claro! Freír un alimento a fuego lento solamente hasta que está ligeramente dorado</p>
-        </ion-item>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/Profile.png">
-            </ion-avatar>
-            <h2>Usuario</h2>
-            <p text-left>Muchas gracias Martha, adiós</p>
-        </ion-item>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/Martha.png">
-            </ion-avatar>
-            <h2>Martha</h2>
-            <p text-left>Adiós</p>
+    <ion-list>
+        <ion-item ion-item *ngFor="let msg of messages">
+            <div *ngIf="msg.user == 'user'" item-end>
+                <ion-avatar item-end>
+                    <img src="/src/assets/imgs/Profile.png">
+                </ion-avatar>
+                <h3>
+                    {{msg.message}}
+                </h3>
+            </div>
+            <div *ngIf="msg.user == 'martha'" item-start>
+                <ion-avatar item-start>
+                    <img src="/src/assets/imgs/Martha.png">
+                </ion-avatar>
+                <h3>
+                    {{msg.message}}
+                </h3>
+            </div>
         </ion-item>
     </ion-list>
 </ion-content>
@@ -58,12 +34,17 @@
     <ion-grid>
         <ion-row>
             <ion-col col-1></ion-col>
-            <ion-col col-9>
+            <ion-col col-8>
                 <ion-input type="text" placeholder="Escribe aqui"></ion-input>
             </ion-col>
             <ion-col col-1>
                 <button ion-button clear>
                     <ion-icon name="md-send"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col col-1>
+                <button ion-button clear>
+                    <ion-icon name="ios-mic"></ion-icon>
                 </button>
             </ion-col>
         </ion-row>

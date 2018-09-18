@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { PopoverController } from 'ionic-angular';
-import { ListeningPage } from '../martha/listening';
 import { ModalController } from 'ionic-angular';
-import { TextModalPage } from '../martha/text'
+import { ChatPage } from '../martha/chat'
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html'
@@ -10,14 +9,8 @@ import { TextModalPage } from '../martha/text'
 export class ProfilePage {
   constructor(public popoverCtrl: PopoverController,public modalCtrl: ModalController) {
   }
-  presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(ListeningPage);
-    popover.present({
-      ev: myEvent
-    });
-  }
   presentMartha() {
-    let profileModal = this.modalCtrl.create(TextModalPage, { userId: 8675309 });
+    let profileModal = this.modalCtrl.create(ChatPage, { userId: 8675309 });
     profileModal.present();
   }
 }

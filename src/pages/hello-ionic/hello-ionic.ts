@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, ModalController} from 'ionic-angular';
 import {ItemDetailsPage} from '../item-details/item-details';
-import { ListeningPage } from '../martha/listening';
 import { Http} from '@angular/http';
 import { PopoverController } from 'ionic-angular';
-import { TextModalPage } from '../martha/text'
+import { ChatPage } from '../martha/chat'
 import { FilterPage } from '../hello-ionic/filters'
 import 'rxjs/add/operator/map';
 
@@ -29,14 +28,8 @@ export class HelloIonicPage {
         item: item
       });
   }
-  presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(ListeningPage);
-    popover.present({
-      ev: myEvent
-    });
-  }
   presentMartha() {
-    let profileModal = this.modalCtrl.create(TextModalPage, { userId: 8675309 });
+    let profileModal = this.modalCtrl.create(ChatPage, { userId: 8675309 });
     profileModal.present();
   }
   presentFiletrs(myEvent)

@@ -7,8 +7,7 @@ import { MyApp } from './app.component';
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ProfilePage } from '../pages/profile/profile';
-import { ListeningPage } from '../pages/martha/listening';
-import { TextModalPage } from '../pages/martha/text';
+import { ChatPage } from '../pages/martha/chat';
 import { FilterPage } from '../pages/hello-ionic/filters'
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -20,8 +19,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HelloIonicPage,
     ItemDetailsPage,
     ProfilePage,
-    TextModalPage,
-    ListeningPage,
+    ChatPage,
     FilterPage
   ],
   imports: [
@@ -35,8 +33,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HelloIonicPage,
     ItemDetailsPage,
     ProfilePage,
-    TextModalPage,
-    ListeningPage,
+    ChatPage,
     FilterPage
   ],
   providers: [

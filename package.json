@@ -32,6 +32,7 @@
     "cordova-plugin-add-swift-support": "^1.7.2",
     "cordova-plugin-cocoapod-support": "^1.2.10",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-ionic": "^5.2.4",
     "cordova-plugin-ionic-keyboard": "^2.1.2",
     "cordova-plugin-ionic-webview": "^2.1.4",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.2.0",
+    "@ionic/lab": "1.0.9",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
@@ -54,7 +56,9 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
       "cordova-plugin-ionic-keyboard": {},
       "bms-push": {}
     },
