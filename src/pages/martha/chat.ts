@@ -7,21 +7,39 @@ import { ViewController, NavParams, NavController } from 'ionic-angular';
 })
 export class ChatPage {
 
-  messages: Array<{ message: string, user: string }>;
+  messages: Array<{message: string, user: string }>;
   text = 'asdfskdjfh';
 
   constructor(public viewCtrl: ViewController, public params: NavParams, public navCtrl: NavController) {
     this.messages = [];
-    for (let i = 0; i < 10; i++) {
-      var user = "user"
-      if(i%2 == 0){
-        user = "martha";
-      }
       this.messages.push({
-        message: i + "",
-        user: user
+        message: "Hola, ¿En qué te puedo ayudar?",
+        user: "martha"
       })
-    }
+      this.messages.push({
+        message: "Quiero cocinar algo",
+        user: "user"
+      })
+      this.messages.push({
+        message: "¿Ya tienes pensado qué cocinar o te ayudo a decidir?",
+        user: "martha"
+      })
+      this.messages.push({
+        message: "Ayúdame",
+        user: "user"
+      })
+      this.messages.push({
+        message: "¿Qué ingredientes tienes disponibles?",
+        user: "martha"
+      })
+      this.messages.push({
+        message: "Pollo, pasta, arroz, tomate...",
+        user: "user"
+      })
+      this.messages.push({
+        message: "De acuerdo, déjame ver qué recetas tengo...",
+        user: "martha"
+      })  
   }
 
   close() {

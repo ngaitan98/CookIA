@@ -10,23 +10,35 @@
 </ion-header>
 <ion-content>
     <ion-list>
-        <ion-item ion-item *ngFor="let msg of messages">
-            <div *ngIf="msg.user == 'user'" item-end>
-                <ion-avatar item-end>
-                    <img src="/src/assets/imgs/Profile.png">
-                </ion-avatar>
-                <h3>
-                    {{msg.message}}
-                </h3>
-            </div>
-            <div *ngIf="msg.user == 'martha'" item-start>
-                <ion-avatar item-start>
-                    <img src="/src/assets/imgs/Martha.png">
-                </ion-avatar>
-                <h3>
-                    {{msg.message}}
-                </h3>
-            </div>
+        <ion-item ion-item *ngFor="let msg of messages" text-wrap>
+            <ion-grid>
+                <ion-row *ngIf="msg.user == 'user'" item-end>
+                    <ion-col col-10>
+                        <h3>
+                            {{msg.message}}
+                        </h3>
+                    </ion-col>
+                    <ion-col col-2>
+                        <ion-avatar item-end>
+                            <img src="assets/imgs/Profile.png">
+                        </ion-avatar>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <ion-grid>
+                <ion-row *ngIf="msg.user == 'martha'" item-start>
+                    <ion-col col-2>
+                        <ion-avatar item-start>
+                            <img src="assets/imgs/martha-avatar.png">
+                        </ion-avatar>
+                    </ion-col>
+                    <ion-col col-10>
+                        <h3>
+                            {{msg.message}}
+                        </h3>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-item>
     </ion-list>
 </ion-content>
