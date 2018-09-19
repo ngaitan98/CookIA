@@ -47,15 +47,15 @@
         <ion-row>
             <ion-col col-1></ion-col>
             <ion-col col-8>
-                <ion-input type="text" placeholder="Escribe aqui"></ion-input>
+                <ion-input type="text" placeholder="Escribe aqui" [(ngModel)]="input"></ion-input>
             </ion-col>
             <ion-col col-1>
-                <button ion-button clear>
-                    <ion-icon name="md-send"></ion-icon>
+                <button ion-button clear (click)="sendMessage(this.input)">
+                    <ion-icon name="md-send" ></ion-icon>
                 </button>
             </ion-col>
             <ion-col col-1>
-                <button ion-button clear>
+                <button ion-button clear (click)="sendMessage()">
                     <ion-icon name="ios-mic"></ion-icon>
                 </button>
             </ion-col>
