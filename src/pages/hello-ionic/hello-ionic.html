@@ -16,34 +16,34 @@
   </ion-row>
 </ion-header>
 <ion-content>
-    <ion-card *ngFor="let item of items">
-        <img src="{{item.img}}" (click)="itemTapped($event, item)">
-        <ion-card-content (click)="itemTapped($event, item)">
-          <ion-card-title>
-            {{item.name}}
-          </ion-card-title>
-          <p>
-            Duración: {{item.minTime}}m-{{item.maxTime}}m
-          </p>
-          <p>
-            Dificultad: {{item.dificultad}}
-          </p>
-        </ion-card-content>
-        <ion-row>
-            <ion-col>
-              <button ion-button icon-start clear small>
-                <ion-icon name="thumbs-up"></ion-icon>
-                <div>{{item.likes}} Likes</div>
-              </button>
-            </ion-col>
-            <ion-col>
-              <button ion-button icon-start clear small>
-                <ion-icon name="text"></ion-icon>
-                <div>{{item.comments.length}} Comments</div>
-              </button>
-            </ion-col>
-          </ion-row>
-      </ion-card>
+  <ion-card *ngFor="let recipe of data?.recipes">
+    <img src="{{recipe.image}}" (click)="itemTapped($event, recipe)">
+    <ion-card-content (click)="itemTapped($event, recipe)">
+      <ion-card-title>
+        {{recipe.title}}
+      </ion-card-title>
+      <p>
+        Diets: {{recipe.diets}}
+      </p>
+      <p>
+        Types: {{recipe.dishTypes}}
+      </p>
+      <p>
+        Preparation time: {{recipe.readyInMinutes}}min
+      </p>
+      <p>
+        Servings: {{recipe.servings}}
+      </p>
+    </ion-card-content>
+    <ion-row>
+        <ion-col>
+          <button ion-button icon-start clear small>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>{{recipe.aggregateLikes}} Likes</div>
+          </button>
+        </ion-col>
+      </ion-row>
+  </ion-card>
 </ion-content>
 <ion-footer>
     <ion-navbar>

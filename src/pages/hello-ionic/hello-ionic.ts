@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {NavController, NavParams, ModalController} from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
+import {NavController, NavParams, ModalController, SelectPopover} from 'ionic-angular';
 import {ItemDetailsPage} from '../item-details/item-details';
 import { PopoverController } from 'ionic-angular';
 import { ChatPage } from '../martha/chat'
@@ -13,19 +13,13 @@ import { RecipesProvider } from '../../providers/recipes/recipes'
 })
 export class HelloIonicPage { 
     selectedItem: any;
-    items: any[];
     filters: any[];
-      recipes: any;
-
-
+    data: any;
     constructor(public navCtrl: NavController, public navParams: NavParams, 
         public popoverCtrl: PopoverController, public modalCtrl: ModalController,
         public recipesProvider: RecipesProvider) {
-
-          //Prueba
-          this.loadRecipes();
+         this.loadRecipes();
     }
-
     itemTapped(event, item) {
       this.navCtrl.push(ItemDetailsPage, {
         item: item
@@ -46,19 +40,11 @@ export class HelloIonicPage {
   filterBy(filters){
     
   }
-
   loadRecipes(){
     this.recipesProvider.randomRecipes()
-        .then(data => {
-          this.recipes = data;
-          console.log(this.recipes);
-    });
-  }
-  findRecipesName(tags: string){
-    this.recipesProvider.findRecipesName(tags)
-        .then(data => {
-          this.recipes = data;
-          console.log(this.recipes);
+        .then(recipes => {
+          this.data = recipes;
+          console.log(this.data);
     });
   }
 }
