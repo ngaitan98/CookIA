@@ -5,7 +5,7 @@ import { PopoverController } from 'ionic-angular';
 import { ChatPage } from '../martha/chat'
 import { FilterPage } from '../hello-ionic/filters'
 import 'rxjs/add/operator/map';
-  import { RecipesProvider } from '../../providers/recipes/recipes'
+import { RecipesProvider } from '../../providers/recipes/recipes'
 
 @Component({
   selector: 'page-hello-ionic',
@@ -23,7 +23,7 @@ export class HelloIonicPage {
         public recipesProvider: RecipesProvider) {
 
           //Prueba
-          this.loadRecipes(['burger', 'pizza']);
+          this.loadRecipes();
     }
 
     itemTapped(event, item) {
@@ -32,9 +32,8 @@ export class HelloIonicPage {
       });
   }
   presentMartha() {
-        // let profileModal = this.modalCtrl.create(ChatPage, { userId: 8675309 });
-        let profileModal = this.modalCtrl.create(People);
-    profileModal.present();
+      let profileModal = this.modalCtrl.create(ChatPage, { userId: 8675309 });
+      profileModal.present();
   }
 
       presentFiletrs(myEvent) {
@@ -46,13 +45,20 @@ export class HelloIonicPage {
 
   filterBy(filters){
     
-      }
+  }
 
-      loadRecipes(tags: string[]){
-        this.recipesProvider.randomRecipes(tags)
+  loadRecipes(){
+    this.recipesProvider.randomRecipes()
         .then(data => {
           this.recipes = data;
           console.log(this.recipes);
-        });
+    });
+  }
+  findRecipesName(tags: string){
+    this.recipesProvider.findRecipesName(tags)
+        .then(data => {
+          this.recipes = data;
+          console.log(this.recipes);
+    });
   }
 }

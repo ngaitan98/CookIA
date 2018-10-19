@@ -18,27 +18,18 @@ export class RecipesProvider {
     'X-Mashape-Key' : 'nWRzp0wBBKmshvLpaNymy5mPvUyHp1HEanjjsncnm323F301Ih',
     'Accept' : 'application/json'
   })};
-
-
   constructor(public http: HttpClient) {
     
   }
+
 
   public findRecipesName(name: string) {
     return this.makeHttpRequest(this.apiUrl+ '/recipes/search?instructionsRequired=true&query=' + name)
   }
 
-  public randomRecipes(tags: string[]) {
-    let tagsStr = '';
-    for (let i = 0; i < tags.length; i++) {
-      if(i < tags.length - 1){
-        tagsStr += tags[i] + '&2C'
-      }
-      else {
-        tagsStr += tags[i]
-      }
-    }
-    return this.makeHttpRequest(this.apiUrl + 'recipes/random?limitLicense=true&number=20&tags=' + tagsStr)
+  public randomRecipes() {
+    console.log(this.apiUrl + 'recipes/random?limitLicense=true&number=20')
+    return this.makeHttpRequest(this.apiUrl + '/recipes/random?limitLicense=true&number=20');
   }
 
   private makeHttpRequest(uri: string) {
