@@ -9,8 +9,16 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-list>
-        <ion-item ion-item *ngFor="let msg of messages" text-wrap>
+    <ion-list no-lines>
+        <ion-item text-wrap *ngFor="let m of messages" [ngClass]="{ 'user': m.user === 'martha','to':   m.user === 'user' }">
+            <ion-avatar item-start>
+                <img [src]="m.user === 'martha' ? 'https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Robot-512.png' : 'https://image.flaticon.com/icons/png/128/149/149071.png'">
+            </ion-avatar>
+            <h2>
+                <strong>{{m.user}}</strong>
+            </h2>
+            <div class="message">{{m.message}}</div>
+            <!--
             <ion-grid>
                 <ion-row *ngIf="msg.user == 'user'" item-end>
                     <ion-col col-10>
@@ -20,7 +28,7 @@
                     </ion-col>
                     <ion-col col-2>
                         <ion-avatar item-end>
-                            <img src="assets/imgs/Profile.png">
+                            <img src="https://image.flaticon.com/icons/png/128/149/149071.png">
                         </ion-avatar>
                     </ion-col>
                 </ion-row>
@@ -39,6 +47,7 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
+        -->
         </ion-item>
     </ion-list>
 </ion-content>
@@ -47,11 +56,11 @@
         <ion-row>
             <ion-col col-1></ion-col>
             <ion-col col-8>
-                <ion-input type="text" placeholder="Escribe aqui" [(ngModel)]="input"></ion-input>
+                <ion-input type="text" placeholder="Escribe aqui" [(ngModel)]="input" (keypress)="keyPressHandler($event.keyCode, input)"></ion-input>
             </ion-col>
             <ion-col col-1>
                 <button ion-button clear (click)="sendMessage(this.input)">
-                    <ion-icon name="md-send" ></ion-icon>
+                    <ion-icon name="md-send"></ion-icon>
                 </button>
             </ion-col>
             <ion-col col-1>
