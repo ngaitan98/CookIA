@@ -24,19 +24,13 @@ export class RecipesProvider {
     
   }
 
-  public quickAnswer(question: string) {
-    let q = encodeURIComponent(question);
-    q = q.replace("%20", "+");
-    return this.makeGetRequest(this.apiUrl + '/recipes/quickAnswer?q=' + q );
-  }
-
   public findRecipes(query: string, diet?: string, type?: string, excludedIngredients?: string[], intolerances?: string[]) {
-    let uri = this.apiUrl + '/recipes/search?instructionsRequired=true&limitLicense=true&number=20&query=' + query;
+    let uri = this.apiUrl + '/recipes/search?instructionsRequired=true&limitLicense=true&number=20&query=' + encodeURIComponent(query);
     if(diet !== undefined) {
-      uri += "&diet=" + diet;
+      uri += "&diet=" + encodeURIComponent(diet);
     }
     if(type !== undefined) {
-      uri + '&type' + type;
+      uri + '&type' + encodeURIComponent(type);
     }
     if(excludedIngredients !== undefined) {
       uri += '&excludedIngredients' + this.arrayToUriList(excludedIngredients);
@@ -73,11 +67,11 @@ export class RecipesProvider {
   }
 
   public quickAnser(question: string) {
-    return this.makeGetRequest(this.apiUrl + '/recipes/quickAnswer?q=' + question);
+    return this.makeGetRequest(this.apiUrl + '/recipes/quickAnswer?q=' + encodeURIComponent(question));
   }
 
   public ingredientSubstituteByName(ingredientName: string) {
-    return this.makeGetRequest(this.apiUrl + '/food/ingredients/substitutes?ingredientName=' + ingredientName);
+    return this.makeGetRequest(this.apiUrl + '/food/ingredients/substitutes?ingredientName=' + encodeURIComponent(ingredientName));
   }
 
   public ingredientSubstituteById(ingredientId: number) {
@@ -89,17 +83,7 @@ export class RecipesProvider {
   }
 
   public filteredRandomRecipes(tags: string[]) {
-    this.formatListUri(tags);
-    let tagsStr = '';
-    for (let i = 0; i < tags.length; i++) {
-      if(i < tags.length - 1){
-        tagsStr += tags[i] + '&2C';
-      }
-      else {
-        tagsStr += tags[i];
-      }
-    }
-    return this.makeGetRequest(this.apiUrl + '/recipes/random?limitLicense=false&number=20&tags=' + tagsStr);
+    return this.makeGetRequest(this.apiUrl + '/recipes/random?limitLicense=false&number=20&tags=' + this.formatListUri(tags));
   }
 
   public randomRecipes() {
@@ -120,7 +104,7 @@ export class RecipesProvider {
     let string = '';
     for (let i = 0; i < strings.length; i++) {
       if(i < strings.length - 1){
-        string += strings[i] + '&2C';
+        string += strings[i] + ',';
       }
       else {
         string += strings[i];
@@ -130,7 +114,7 @@ export class RecipesProvider {
   }
 
   private formatListUri(strings: string[]) {
-    return this.arrayToUriList(strings).replace(" ", "+");
+    return encodeURIComponent(this.arrayToUriList(strings));
   }
 
 }
