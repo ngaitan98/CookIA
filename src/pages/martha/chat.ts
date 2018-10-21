@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { ViewController, NavParams, Content, NavController } from 'ionic-angular';
-import { AssistantV1 } from 'watson-developer-cloud'
 import { SpeechToTextV1 } from 'watson-developer-cloud'
 import { PARAMETERS } from '@angular/core/src/util/decorators';
 import { log } from 'util';
@@ -9,13 +8,13 @@ import { log } from 'util';
 import {ApiAiClient} from "api-ai-javascript/es6/ApiAiClient";
 import { RecipesProvider } from '../../providers/recipes/recipes'
 
-const client = new ApiAiClient({accessToken: '3da16c80a8e44c2a9f3c98d49ff40d67'});
+const client = new ApiAiClient({accessToken: '80a4a758532947068f3787f95241b510'});
 const INTEND_ASK_FOR_SERVICE = "Ask for service";
 const INTEND_SEARCH_BY_RECIPE_NAME = "Search by recipe name";
 const INTEND_SEARCH_BY_INGREDIENT_NAME = "Search by ingredient name";
 const INTEND_NUMBER_SELECTED = "Number selected";
 const INTEND_NEXT_STEP = "Next step";
-const recipesProvider = new RecipesProvider();
+const INTEND_RECOMMEND_A_RECIPE = "Recommend a recipe";
 // import { SpeechRecognition } from '@ionic-native/speech-recognition'
 @Component({
   selector: "page-chat",
@@ -73,19 +72,26 @@ export class ChatPage {
           this.recipesProvider.recipeInstructions(recipe.id).then(instructions =>{
             console.log(instructions);
               this.temporalSteps = instructions[0].steps;
-              var str = this.temporalCurrentStep +1 + '. '+this.temporalSteps[this.temporalCurrentStep].step;
+              str = this.temporalCurrentStep +1 + '. '+this.temporalSteps[this.temporalCurrentStep].step;
               this.messages.push({message:str, user:'martha'});
           });
         }
       }
       else if(response.result.metadata.intentName==INTEND_NEXT_STEP){
         this.temporalCurrentStep++;
-        var str = this.temporalCurrentStep +1 + '. '+this.temporalSteps[this.temporalCurrentStep].step;
-        this.messages.push({message:str, user:'martha'});
+        if(this.temporalCurrentStep<this.temporalSteps.length){
+          str = this.temporalCurrentStep +1 + '. '+this.temporalSteps[this.temporalCurrentStep].step;
+          this.messages.push({message:str, user:'martha'});
+        }
+        else{
+          this.messages.push({message:'You have finished!', user:'martha'});
+        }
+      }
+      else if(response.result.metadata.intentName==INTEND_RECOMMEND_A_RECIPE){
+      }
+      else if(response.result.metadata.intentName==INTEND_ASK_FOR_SERVICE){
       }
       else if(response.result.metadata.intentName==INTEND_SEARCH_BY_INGREDIENT_NAME){
-        
-        
       }
       this.scrollToBottom();
     })
