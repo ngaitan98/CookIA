@@ -27,23 +27,24 @@ export class RecipesProvider {
   public quickAnswer(question: string) {
     let q = encodeURIComponent(question);
     q = q.replace("%20", "+");
-    return this.makeHttpRequest(this.apiUrl + '/recipes/quickAnswer?q=' + q );
+    return this.makeGetRequest(this.apiUrl + '/recipes/quickAnswer?q=' + q );
   }
 
-
-  public findRecipes(name: string, diet?: string, excludedIngredients?: string[], intolerances?: string[]) {
-    if(diet === undefined) {
-      diet = ""
+  public findRecipes(query: string, diet?: string, type?: string, excludedIngredients?: string[], intolerances?: string[]) {
+    let uri = this.apiUrl + '/recipes/search?instructionsRequired=true&limitLicense=true&number=20&query=' + query;
+    if(diet !== undefined) {
+      uri += "&diet=" + diet;
     }
-    let excludedStr = "";
+    if(type !== undefined) {
+      uri + '&type' + type;
+    }
     if(excludedIngredients !== undefined) {
-      excludedStr = this.arrayToUriList(excludedIngredients);
+      uri += '&excludedIngredients' + this.arrayToUriList(excludedIngredients);
     }
-    let intolerancesStr = "";
     if(intolerances !== undefined) {
-      intolerancesStr = this.arrayToUriList(intolerances);
+      uri += '&intolerances' + this.arrayToUriList(intolerances);
     }
-    return this.makeHttpRequest(this.apiUrl + '/recipes/search?diet=' + diet + '&excludedIngredients=' + excludedStr  + '&instructionsRequired=true&intolerances=' + intolerancesStr + '&imitLicense=true&number=20&query=' + name)
+    return this.makeGetRequest(uri);
   }
 
   public findRecipesIngredients(ingredients: string[]) {
@@ -51,20 +52,40 @@ export class RecipesProvider {
     //limitLicence: only show recipes with atribution licence, if those are requested later, they will have instructions
     //number: number of recipes in response
     //ranking: maximize used ingredients(1) or minimize missing ingredients(2)
-    return this.makeHttpRequest(this.apiUrl + '/recipes/findByIngredients?fillIngredients=false&ingredients=' + this.formatListUri(ingredients) + "&limitLicence=true&number=20&ranking=2")
+    return this.makeGetRequest(this.apiUrl + '/recipes/findByIngredients?fillIngredients=false&ingredients=' + this.formatListUri(ingredients) + "&limitLicence=true&number=20&ranking=2");
   }
 
   public summarizeRecipe(recipeId: number) {
-    return this.makeHttpRequest(this.apiUrl + '/recipes/' + recipeId + '/summary')
+    return this.makeGetRequest(this.apiUrl + '/recipes/' + recipeId + '/summary');
   }
 
   public recipeInstructions(recipeId: number) {
     //stepBreakdown: break down the recipe steps even more
-    return this.makeHttpRequest(this.apiUrl + '/recipes/' + recipeId + '/analyzedInstructions?stepBreakdown=true')
+    return this.makeGetRequest(this.apiUrl + '/recipes/' + recipeId + '/analyzedInstructions?stepBreakdown=true');
+  }
+
+  public recipeInformation(recipeId: number) {
+    return this.makeGetRequest(this.apiUrl + '/recipes/' + recipeId + '/information');
   }
 
   public findSimilarRecipes(recipeId: number) {
-    return this.makeHttpRequest(this.apiUrl + '/recipes/' + recipeId + '/similar')
+    return this.makeGetRequest(this.apiUrl + '/recipes/' + recipeId + '/similar');
+  }
+
+  public quickAnser(question: string) {
+    return this.makeGetRequest(this.apiUrl + '/recipes/quickAnswer?q=' + question);
+  }
+
+  public ingredientSubstituteByName(ingredientName: string) {
+    return this.makeGetRequest(this.apiUrl + '/food/ingredients/substitutes?ingredientName=' + ingredientName);
+  }
+
+  public ingredientSubstituteById(ingredientId: number) {
+    return this.makeGetRequest(this.apiUrl + '/food/ingredients/' + ingredientId + '/substitutes');
+  }
+
+  public joke() {
+    return this.makeGetRequest(this.apiUrl + '/food/jokes/random')
   }
 
   public filteredRandomRecipes(tags: string[]) {
@@ -78,14 +99,14 @@ export class RecipesProvider {
         tagsStr += tags[i];
       }
     }
-    return this.makeHttpRequest(this.apiUrl + '/recipes/random?limitLicense=false&number=20&tags=' + tagsStr);
+    return this.makeGetRequest(this.apiUrl + '/recipes/random?limitLicense=false&number=20&tags=' + tagsStr);
   }
 
   public randomRecipes() {
-    return this.makeHttpRequest(this.apiUrl + '/recipes/random?limitLicense=false&number=20&');
+    return this.makeGetRequest(this.apiUrl + '/recipes/random?limitLicense=false&number=20&');
   }
 
-  private makeHttpRequest(uri: string) {
+  private makeGetRequest(uri: string) {
     return new Promise( resolve => {
       this.http.get(uri, this.options).subscribe(data => {
         resolve(data);
