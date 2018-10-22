@@ -1,8 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ViewController, NavParams, Content, NavController } from 'ionic-angular';
 import { SpeechToTextV1 } from 'watson-developer-cloud'
-import { PARAMETERS } from '@angular/core/src/util/decorators';
-import { log } from 'util';
 import { ApiAiClient } from "api-ai-javascript/es6/ApiAiClient";
 import { RecipesProvider } from '../../providers/recipes/recipes'
 
@@ -12,6 +10,7 @@ const INTEND_SEARCH_BY_RECIPE_NAME = "Search by recipe name";
 const INTEND_SEARCH_BY_INGREDIENT_NAME = "Search by ingredient name";
 const INTEND_NUMBER_SELECTED = "Number selected";
 const INTEND_NEXT_STEP = "Next step";
+const INTEND_YES_CONFIRMATION = "YES confirmation";
 const INTEND_RECOMMEND_A_RECIPE = "Recommend a recipe";
 // import { SpeechRecognition } from '@ionic-native/speech-recognition'
 @Component({
@@ -27,6 +26,8 @@ export class ChatPage {
   responses = new Array;
 
   temporalRecipes = new Array;
+
+  temporalRecipe;
 
   temporalSteps = new Array;
 
@@ -61,20 +62,31 @@ export class ChatPage {
             }
             this.messages.push({ message: str, user: 'martha' });
             console.log(str);
-            return str;
           });
         }
         else if (response.result.metadata.intentName == INTEND_NUMBER_SELECTED) {
           var number = response.result.parameters.number - 1;
-
-          var recipe = this.temporalRecipes[number];
-          console.log(recipe);
-          this.recipesProvider.recipeInstructions(recipe.id).then(instructions => {
+          this.temporalRecipe = this.temporalRecipes[number];
+          console.log(this.temporalRecipe);
+          str = 'These are the ingredients. Do you have them all?';
+          this.messages.push({ message: str, user: 'martha' });
+          str='';
+          this.recipesProvider.recipeInformation(this.temporalRecipe.id).then(info=>{
+            var ingredients = info['extendedIngredients'];
+            console.log(ingredients);
+            for(var i =0;i<ingredients.length;i++){
+              str+= (i+1) + '. ' +ingredients[i].measures.metric.amount +' ' +ingredients[i].measures.metric.unitShort+' of '+ingredients[i].name +'\n';
+            }
+            this.messages.push({ message: str, user: 'martha' });
+          });
+         
+        }
+        else if(response.result.metadata.intentName == INTEND_YES_CONFIRMATION){
+          this.recipesProvider.recipeInstructions(this.temporalRecipe.id).then(instructions => {
             this.temporalSteps = instructions[0].steps;
             str = this.temporalCurrentStep + 1 + '. ' + this.temporalSteps[this.temporalCurrentStep].step;
             this.messages.push({ message: str, user: 'martha' });
           });
-
         }
         else if (response.result.metadata.intentName == INTEND_NEXT_STEP) {
           this.temporalCurrentStep++;
