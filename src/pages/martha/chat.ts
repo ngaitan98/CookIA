@@ -52,11 +52,12 @@ export class ChatPage {
         this.messages.push({ message: str, user: 'martha' });
         if (response.result.metadata.intentName == INTEND_SEARCH_BY_RECIPE_NAME) {
           var food = response.result.parameters.food_list;
-          this.recipesProvider.findRecipes(food).then(recipes => {
+          this.recipesProvider.findRecipes(food).then( recipes => {
             str = 'Please choose a number:\n';
-            this.temporalRecipes = recipes.results;
+            
+            this.temporalRecipes = recipes['results'];
             for (var i = 0; i < 3; i++) {
-              str += (i + 1) + '. ' + recipes.results[i].title + '\n';
+              str += (i + 1) + '. ' + this.temporalRecipes[i].title + '\n';
             }
             this.messages.push({ message: str, user: 'martha' });
             console.log(str);
@@ -67,8 +68,8 @@ export class ChatPage {
           var number = response.result.parameters.number - 1;
 
           var recipe = this.temporalRecipes[number];
+          console.log(recipe);
           this.recipesProvider.recipeInstructions(recipe.id).then(instructions => {
-            console.log(instructions);
             this.temporalSteps = instructions[0].steps;
             str = this.temporalCurrentStep + 1 + '. ' + this.temporalSteps[this.temporalCurrentStep].step;
             this.messages.push({ message: str, user: 'martha' });
@@ -90,6 +91,12 @@ export class ChatPage {
         else if (response.result.metadata.intentName == INTEND_ASK_FOR_SERVICE) {
         }
         else if (response.result.metadata.intentName == INTEND_SEARCH_BY_INGREDIENT_NAME) {
+          var ingredients = response.result.parameters.ingredients;
+          this.recipesProvider.findRecipesIngredients(ingredients).then(recipes => {
+            console.log(recipes);
+            
+          });
+
         }
         this.scrollToBottom();
       })
