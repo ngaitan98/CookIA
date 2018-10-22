@@ -131,11 +131,11 @@ export class RecipesProvider {
 	}
 
 	public filteredRandomRecipes(tags: string[]) {
-		return this.makeGetRequest(this.apiUrl + '/recipes/random?limitLicense=false&number=20&tags=' + this.formatListUri(tags));
+		return this.makeGetRequest(this.apiUrl + '/recipes/random?limitLicense=true&number=20&tags=' + this.formatListUri(tags));
 	}	
 
 	public randomRecipes() {
-		return this.makeGetRequest(this.apiUrl + '/recipes/random?limitLicense=false&number=20');
+		return this.makeGetRequest(this.apiUrl + '/recipes/random?limitLicense=true&number=20');
 	}
 
 	public fiterRandomByPreparationTime(minutes: number, promise: Promise<{}>) {
