@@ -18,16 +18,17 @@
     <ion-icon name="pin"> Bogotá, Colombia </ion-icon>
   </p>
   <ion-list> <h3>Datos usuario</h3>
-     
-        <ion-item >{{ correo }} </ion-item>
-        <ion-item >{{ usuario }} </ion-item>
-        <ion-item >{{ telefono }} </ion-item>
+    
+        
+        <ion-item >user: {{ usuario }} </ion-item>
+        <ion-item >phone:{{ telefono }} </ion-item>
+        <ion-item >mail:{{ correo }} </ion-item>
       
       
      </ion-list>
 
      <button ion-button icon-only (click)="canReorder = !canReorder">
-
+sort recipes
 
      </button>
 
@@ -35,12 +36,12 @@
        
       <ion-list reorder="{{ canReorder }}" (ionItemReorder)="reorderItems($event)" > 
         <ion-item-sliding *ngFor="let item of favoritas">
-          <ion-item > 
-            {{item.id_2}}
-          <button (click)="metodo(item.id)">
-            {{titulo}}   {{click}}
-          </button>  >      
-           </ion-item >
+         
+          <ion-item  > 
+              {{item.nombre}}
+          
+           
+      </ion-item >
 <ion-item-options side="right">
   <button  (click)="delete(item.id_2)">
     <ion-icon name="md-trash">

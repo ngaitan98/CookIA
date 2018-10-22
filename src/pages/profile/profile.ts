@@ -16,7 +16,7 @@ export class ProfilePage {
   personaCollection: AngularFirestoreCollection<persona>;
   persona1Collection: AngularFirestoreDocument<persona>;
   
-  
+
 
 
   person: Observable<persona[]>;
@@ -24,6 +24,8 @@ export class ProfilePage {
 
   userDoc: AngularFirestoreDocument<persona>;
  user: persona;
+
+
 
  canReorder: boolean =false;
   favoritasCollection: AngularFirestoreCollection<receta>;
@@ -33,7 +35,7 @@ export class ProfilePage {
   correo: string;
   telefono: string;
   titulo: string;
-  nombre_receta: string;
+  nombres_recetas: any[];
   favoritasTitulo: receta_titulo[];
 
 
@@ -57,25 +59,15 @@ this.favoritasCollection = this.fireStore.collection('/usuarios/Asbw31JLyrKU954D
 this.favoritasCollection.snapshotChanges().subscribe( recetaList => {
   this.favoritas= recetaList.map (item =>{
 
-    //((nombre_x) =>{this.rp.summarizeRecipe(item.payload.doc.data().id)
-      //.then((nombre_x) => {
-        
-        ///  this.data = nombre_x;
-         // this.titulo= this.data.title;
-        //console.log(nombre_x);
-          //this.funcion_llamada(this.data)
-    
-          //return this.data.title;
-          ///  })});
-          
-        //  this.loadRecipes(item.payload.doc.data().id);
+
+
 
 return {
 
   id :item.payload.doc.data().id,
   priority:item.payload.doc.data().priority,
   id_2: item.payload.doc.id,
-  
+  nombre: item.payload.doc.data().nombre
 
 
 
@@ -91,13 +83,8 @@ this.userDoc.snapshotChanges().subscribe(
          this.correo=item.payload.data().correo;
          this.usuario= item.payload.data().usuario;
          this.telefono=item.payload.data().telefono;
-       
-   // console.log( item.payload.data().correo);
-   //this.user;
-    } );
-
-  
-console.log(this.nombre_receta);
+         
+    } );  
 } 
     
   
@@ -144,17 +131,12 @@ console.error(err);
 }
 
 
-
-
   presentMartha() {
     let profileModal = this.modalCtrl.create(ChatPage, { userId: 8675309 });
     profileModal.present();
   }
 
- // loadRecipes(id:number){
-
-
-    
+ // loadRecipes(id:number)
 
    // this.rp.summarizeRecipe(id)
    //  .then((recipe) => {
@@ -174,7 +156,8 @@ console.error(err);
        //this.funcion_llamada(this.data)
        console.log(this.titulo);
        return this.data.title;
-         }).then( ()=>{
+         }).then( (titulo)=>{
+          
 
          }
            
@@ -186,18 +169,33 @@ console.error(err);
 
 
 
-funcion_llamada(otro :string)
+
+function_calback()
 {
-this.nombre_receta+=otro;
+ // this.nombres_recetas.push(this.titulo);
+  //console.log(this.nombres_recetas.length);
 }
 
-  metodo(id: number){
-    this.loadRecipes(id);
+
+
+
+function_whatever(id: number){
+
+  this.metodo(id,this.function_calback());
+}
+  metodo(id: number,fun){
+    console.log(this.titulo);
+    this.rp.summarizeRecipe(id)
+    .then((recipe) => {
+        this.data = recipe;
+        this.titulo= this.data.title;
+        console.log(this.titulo);
+          });
+         console.log("fuck off"); 
+    
   }
 
-newItem()
-{
-}
+
 
 
 addFavorita(id: number)
@@ -216,7 +214,13 @@ this.fireStore.collection('/usuarios/Asbw31JLyrKU954DMh3L/recetas_favoritas/').a
 
 }
 
+confirmar(id:number)
+{
+ var conf=true;
 
+
+
+}
 
 }
 
@@ -231,12 +235,13 @@ interface receta
   id: number;
   priority: number;
     id_2: string;
-    nombre?:string;
+    nombre:string;
 }
 
 interface receta_titulo
 {
 tit: string;
+
 
 }
 
