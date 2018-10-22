@@ -15,6 +15,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RecipesProvider } from '../providers/recipes/recipes';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { firebaseConfig } from './credentials';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -28,7 +33,9 @@ import { RecipesProvider } from '../providers/recipes/recipes';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
