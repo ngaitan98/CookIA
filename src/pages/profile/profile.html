@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Perfil</ion-title>
+    <ion-title>User profile</ion-title>
   </ion-navbar>
   <ion-searchbar></ion-searchbar>
 </ion-header>
@@ -32,8 +32,7 @@ reordenar
 
      </button>
 
-      <h3>Recetas favoritas</h3>
-      <p>desliza a la derecha para eliminar</p>
+      <h3>Favourite recipes</h3>
        
       <ion-list reorder="{{ canReorder }}" (ionItemReorder)="reorderItems($event)" > 
         <ion-item-sliding *ngFor="let item of favoritas">
@@ -45,15 +44,15 @@ reordenar
       </ion-item >
 <ion-item-options side="right">
   <button  (click)="delete(item.id_2)">
-    <ion-icon name="md-trash"> </ion-icon>
-    Eliminar
+    <ion-icon name="md-trash">
+    </ion-icon>
+    Delete
   </button>
 </ion-item-options>
           </ion-item-sliding>
        </ion-list>
 
-       
-       <button  (click)="addFavorita(738091)"> favorita </button>
+       <button  (click)="addFavorita(738091)"> Add Favourite </button>
 
 </ion-content>
 <ion-footer>

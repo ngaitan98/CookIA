@@ -137,7 +137,7 @@ export class RecipesProvider {
 	public randomRecipes() {
 		return this.makeGetRequest(this.apiUrl + '/recipes/random?limitLicense=true&number=20');
 	}
-
+	
 	public fiterRandomByPreparationTime(minutes: number, promise: Promise<{}>) {
 		let json: any;
 		let recipes = []

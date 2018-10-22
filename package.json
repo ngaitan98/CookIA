@@ -48,7 +48,6 @@
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "sw-toolbox": "3.6.0",
-    "watson-developer-cloud": "^3.12.0",
     "xmlhttprequest": "^1.8.0",
     "zone.js": "0.8.26"
   },
