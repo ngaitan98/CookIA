@@ -87,16 +87,37 @@ export class ChatPage {
           }
         }
         else if (response.result.metadata.intentName == INTEND_RECOMMEND_A_RECIPE) {
+          if(response.result.parameters.food_type !== ""){
+            var tipo = 'type='+response.result.parameters.food_type;
+            this.recipesProvider.filteredRandomRecipes([tipo]).then(recipes => {
+              console.log(recipes['recipes']);
+              str = 'Please choose a number:\n';
+              this.temporalRecipes = new Array;
+              for (var i = 0; i < 3; i++) {
+                this.temporalRecipes.push(recipes['recipes'][i]);
+                str += (i + 1) + '. ' + this.temporalRecipes[i].title + '\n';
+              }
+              this.messages.push({ message: str, user: 'martha' });
+            console.log(str);
+            });
+          }
+          
         }
         else if (response.result.metadata.intentName == INTEND_ASK_FOR_SERVICE) {
         }
         else if (response.result.metadata.intentName == INTEND_SEARCH_BY_INGREDIENT_NAME) {
           var ingredients = response.result.parameters.ingredients;
           this.recipesProvider.findRecipesIngredients(ingredients).then(recipes => {
-            console.log(recipes);
-            
-          });
+            str = 'Please choose a number:\n';
+            this.temporalRecipes = new Array;
+            for (var i = 0; i < 3; i++) {
+              this.temporalRecipes.push(recipes[i]);
+              str += (i + 1) + '. ' + recipes[i].title + '\n';
+            }
+            this.messages.push({ message: str, user: 'martha' });
+            console.log(str);
 
+          });
         }
         this.scrollToBottom();
       })
