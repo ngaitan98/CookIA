@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { ViewController, NavParams, Content, NavController } from 'ionic-angular';
-import { SpeechToTextV1 } from 'watson-developer-cloud'
 import { ApiAiClient } from "api-ai-javascript/es6/ApiAiClient";
 import { RecipesProvider } from '../../providers/recipes/recipes'
 
