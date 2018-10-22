@@ -1,20 +1,44 @@
 <ion-content>
     <ion-item-group inset>
-        <ion-item-divider color="light">Preparation time</ion-item-divider>
+        <ion-item-divider color="light">Filters</ion-item-divider>
         <ion-item>
-            <ion-label>Fast (< 20 minutes) </ion-label> <ion-checkbox color="dark">
-                    </ion-checkbox>
+            <ion-label>
+                Vegan </ion-label>
+            <ion-checkbox color="dark" [(ngModel)]="vegan">
+            </ion-checkbox>
         </ion-item>
         <ion-item>
-            <ion-label>Medium (< 40 minutes)</ion-label> <ion-checkbox color="dark">
-                    </ion-checkbox>
+            <ion-label>
+                Vegetarian</ion-label>
+            <ion-checkbox color="dark" [(ngModel)]="vegetarian">
+            </ion-checkbox>
         </ion-item>
         <ion-item>
-            <ion-label>Slow (> 40 minutes)</ion-label>
-                <ion-checkbox color="dark"></ion-checkbox>
+            <ion-label>
+                Cheap </ion-label>
+            <ion-checkbox color="dark" [(ngModel)]="cheap">
+            </ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                Healthy </ion-label>
+            <ion-checkbox color="dark" [(ngModel)]="healthy">
+            </ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                Gluten Free </ion-label>
+            <ion-checkbox color="dark" [(ngModel)]="gluten">
+            </ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                Dairy Free </ion-label>
+            <ion-checkbox color="dark" [(ngModel)]="dairy">
+            </ion-checkbox>
         </ion-item>
     </ion-item-group>
-    <button ion-button color="secondary" small float-right>
+    <button ion-button color="secondary" small float-right (click) = "filter()">
         Apply filters
     </button>
 </ion-content>
