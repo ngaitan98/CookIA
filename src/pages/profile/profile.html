@@ -19,40 +19,41 @@
   </p>
   <ion-list> <h3>Datos usuario</h3>
      
-        <ion-item >{{ correo }} </ion-item>
-        <ion-item >{{ usuario }} </ion-item>
-        <ion-item >{{ telefono }} </ion-item>
+        
+        <ion-item >usuario: {{ usuario }} </ion-item>
+        <ion-item >telefono:{{ telefono }} </ion-item>
+        <ion-item >correo:{{ correo }} </ion-item>
       
       
      </ion-list>
 
      <button ion-button icon-only (click)="canReorder = !canReorder">
-
+reordenar
 
      </button>
 
       <h3>Recetas favoritas</h3>
+      <p>desliza a la derecha para eliminar</p>
        
       <ion-list reorder="{{ canReorder }}" (ionItemReorder)="reorderItems($event)" > 
         <ion-item-sliding *ngFor="let item of favoritas">
-          <ion-item > 
-            {{item.id_2}}
-          <button (click)="metodo(item.id)">
-            {{titulo}}   {{click}}
-          </button>  >      
-           </ion-item >
+         
+          <ion-item  > 
+              {{item.nombre}}
+          
+           
+      </ion-item >
 <ion-item-options side="right">
   <button  (click)="delete(item.id_2)">
-    <ion-icon name="md-trash">
-
-    </ion-icon>
+    <ion-icon name="md-trash"> </ion-icon>
     Eliminar
   </button>
 </ion-item-options>
           </ion-item-sliding>
        </ion-list>
 
-       <button  (click)="addFavorita(738091)"> holi </button>
+       
+       <button  (click)="addFavorita(738091)"> favorita </button>
 
 </ion-content>
 <ion-footer>

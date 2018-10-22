@@ -76,7 +76,7 @@ export class ChatPage {
             console.log(ingredients);
             for(var i =0;i<ingredients.length;i++){
               str+= (i+1) + '. ' +ingredients[i].measures.metric.amount +' ' +ingredients[i].measures.metric.unitShort+' of '+ingredients[i].name +'\n';
-            }
+            } 
             this.messages.push({ message: str, user: 'martha' });
           });
          
