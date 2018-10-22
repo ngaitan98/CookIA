@@ -25,6 +25,8 @@ export class ProfilePage {
   userDoc: AngularFirestoreDocument<persona>;
  user: persona;
 
+
+
  canReorder: boolean =false;
   favoritasCollection: AngularFirestoreCollection<receta>;
    favoritas: receta[];  
@@ -129,17 +131,12 @@ console.error(err);
 }
 
 
-
-
   presentMartha() {
     let profileModal = this.modalCtrl.create(ChatPage, { userId: 8675309 });
     profileModal.present();
   }
 
- // loadRecipes(id:number){
-
-
-    
+ // loadRecipes(id:number)
 
    // this.rp.summarizeRecipe(id)
    //  .then((recipe) => {

@@ -13,7 +13,12 @@
       <img src="{{selectedItem.image}}" style="width:75%">
     </h3>
     <ion-row>
-      <ion-col col-1></ion-col>
+      <ion-col col-5>
+         <button ion-button (click)="addFavorita(selectedItem.id, selectedItem.title)"  >
+          add to favorites
+    <ion-icon name="add-circle"></ion-icon>
+        </button>
+      </ion-col>
       <ion-col col-10>
         <h3> Ingredients:</h3>
         <p *ngFor = "let ingredient of selectedItem.extendedIngredients">
@@ -36,6 +41,7 @@
             <button ion-button icon-start clear small>
               <ion-icon name="thumbs-up"></ion-icon>
               <div>{{selectedItem.aggregateLikes}} Likes</div>
+    
             </button>
           </ion-col>
           <ion-col col-1></ion-col>
