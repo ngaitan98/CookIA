@@ -3,6 +3,7 @@ import { ViewController, NavParams, Content, NavController } from 'ionic-angular
 import { ApiAiClient } from "api-ai-javascript/es6/ApiAiClient";
 import { RecipesProvider } from '../../providers/recipes/recipes'
 
+
 const client = new ApiAiClient({ accessToken: '80a4a758532947068f3787f95241b510' });
 const INTEND_ASK_FOR_SERVICE = "Ask for service";
 const INTEND_SEARCH_BY_RECIPE_NAME = "Search by recipe name";
@@ -61,6 +62,7 @@ export class ChatPage {
             }
             this.messages.push({ message: str, user: 'martha' });
             console.log(str);
+            this.scrollToBottom();
           });
         }
         else if (response.result.metadata.intentName == INTEND_NUMBER_SELECTED) {
@@ -77,6 +79,7 @@ export class ChatPage {
               str+= (i+1) + '. ' +ingredients[i].measures.metric.amount +' ' +ingredients[i].measures.metric.unitShort+' of '+ingredients[i].name +'\n';
             } 
             this.messages.push({ message: str, user: 'martha' });
+            this.scrollToBottom();
           });
          
         }
@@ -85,6 +88,7 @@ export class ChatPage {
             this.temporalSteps = instructions[0].steps;
             str = this.temporalCurrentStep + 1 + '. ' + this.temporalSteps[this.temporalCurrentStep].step;
             this.messages.push({ message: str, user: 'martha' });
+            this.scrollToBottom();
           });
         }
         else if (response.result.metadata.intentName == INTEND_NEXT_STEP) {
@@ -96,6 +100,7 @@ export class ChatPage {
           else {
             this.messages.push({ message: 'You have finished!', user: 'martha' });
           }
+          this.scrollToBottom();
         }
         else if (response.result.metadata.intentName == INTEND_RECOMMEND_A_RECIPE) {
           if(response.result.parameters.food_type !== ""){
@@ -110,6 +115,7 @@ export class ChatPage {
               }
               this.messages.push({ message: str, user: 'martha' });
             console.log(str);
+            this.scrollToBottom();
             });
           }
           
@@ -127,6 +133,7 @@ export class ChatPage {
             }
             this.messages.push({ message: str, user: 'martha' });
             console.log(str);
+            this.scrollToBottom();
 
           });
         }

@@ -176,7 +176,18 @@ export class RecipesProvider {
 			});
 		});
 	}
-
+	public filterBy(tags: string[]) {
+		let tagsStr = '';
+		for (let i = 0; i < tags.length; i++) {
+		  if(i < tags.length - 1){
+			tagsStr += tags[i] + '&2C'
+		  }
+		  else {
+			tagsStr += tags[i]
+		  }
+		}
+		return this.makeGetRequest(this.apiUrl + '/recipes/random?limitLicense=true&number=20&tags=' + tagsStr)
+	  }
 	private arrayToUriList(strings: string[]) {
 		let string = '';
 		for (let i = 0; i < strings.length; i++) {

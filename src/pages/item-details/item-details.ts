@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument,
 
 
 import { RecipesProvider } from '../../providers/recipes/recipes';
+import { HelloIonicPage } from '../hello-ionic/hello-ionic';
 
 @Component({
   selector: 'page-item-details',

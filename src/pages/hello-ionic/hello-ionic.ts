@@ -6,7 +6,6 @@ import { ChatPage } from '../martha/chat'
 import { FilterPage } from '../hello-ionic/filters'
 import 'rxjs/add/operator/map';
 import { RecipesProvider } from '../../providers/recipes/recipes'
-
 @Component({
   selector: 'page-hello-ionic',
   templateUrl: 'hello-ionic.html'
@@ -33,14 +32,18 @@ export class HelloIonicPage {
   }
 
   presentFiletrs(myEvent) {
-    let popover = this.popoverCtrl.create(FilterPage);
+    let popover = this.popoverCtrl.create(FilterPage,{ helloIonic: this });
     popover.present({
       ev: myEvent
     });
   }
 
-  filterBy(filters) {
-
+  public filterBy(filters) {
+    this.recipesProvider.filterBy(filters)
+      .then(recipes => {
+        this.data = recipes;
+        console.log(this.data);
+      });
   }
 
   findRecipes(search: string) {
