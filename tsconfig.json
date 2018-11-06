@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": false,
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": [
       "dom",
-      "es2015"
+      "es6"
     ],
-    "module": "es2015",
+    "typeRoots": [
+      ".node_modules/@types"
+    ],
+    "module": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
     "target": "es5"
@@ -19,7 +22,8 @@
   "exclude": [
     "node_modules",
     "src/**/*.spec.ts",
-    "src/**/__tests__/*.ts"
+    "src/**/__tests__/*.ts",
+    "dist"
   ],
   "compileOnSave": false,
   "atom": {
