@@ -1,10 +1,10 @@
 <ion-header>
     <ion-navbar (click)="close()">
         <button ion-button clear>
-            Close
+            Close me
         </button>
         <ion-title text-center>
-            Martha
+          Maria  Martha 
         </ion-title>
     </ion-navbar>
 </ion-header>
@@ -54,20 +54,32 @@
 <ion-footer color="light">
     <ion-grid>
         <ion-row>
-            <ion-col col-1></ion-col>
+           
             <ion-col col-8>
-                <ion-input type="text" placeholder="Escribe aqui" [(ngModel)]="input" (keypress)="keyPressHandler($event.keyCode, input)"></ion-input>
+                <ion-input type="text" placeholder="Write here" [(ngModel)]="input" (keypress)="keyPressHandler($event.keyCode, input)"></ion-input>
             </ion-col>
             <ion-col col-1>
                 <button ion-button clear (click)="sendMessage(this.input)">
                     <ion-icon name="md-send"></ion-icon>
                 </button>
             </ion-col>
-            <ion-col col-1>
-                <button ion-button clear (click)="sendMessage()">
+              <ion-col col-1>
+                <button ion-button clear (click)="startListening()">
                     <ion-icon name="ios-mic"></ion-icon>
                 </button>
             </ion-col>
+            <ion-col col-1>
+                <button ion-button clear (click)="getPermission()">
+                    <ion-icon name="logo-android"></ion-icon>
+                </button>
+            </ion-col>
+
+            <button ion-button full (click)="getPermission()">Activate Listening</button>
+            <button ion-button full (click)="stopListening()" *ngIf="isIos()">Stop Listening</button>
+
         </ion-row>
+
+        
     </ion-grid>
+    
 </ion-footer>

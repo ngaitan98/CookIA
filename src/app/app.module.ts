@@ -18,6 +18,7 @@ import { RecipesProvider } from '../providers/recipes/recipes';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { firebaseConfig } from './credentials';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { firebaseConfig } from './credentials';
   providers: [
     StatusBar,
     SplashScreen,
+    SpeechRecognition,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RecipesProvider
   ]

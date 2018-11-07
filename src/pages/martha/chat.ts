@@ -1,7 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { ViewController, NavParams, Content, NavController } from 'ionic-angular';
+import { ViewController, NavParams, Content, NavController, Platform } from 'ionic-angular';
 import { ApiAiClient } from "api-ai-javascript/es6/ApiAiClient";
 import { RecipesProvider } from '../../providers/recipes/recipes'
+import { Observable } from 'rxjs/Observable';
+import { ChangeDetectorRef } from '@angular/core';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
 
 
 const client = new ApiAiClient({ accessToken: '80a4a758532947068f3787f95241b510' });
@@ -14,12 +17,18 @@ const INTEND_YES_CONFIRMATION = "YES confirmation";
 const INTEND_RECOMMEND_A_RECIPE = "Recommend a recipe";
 // import { SpeechRecognition } from '@ionic-native/speech-recognition'
 @Component({
+  
   selector: "page-chat",
   templateUrl: 'martha.html'
 })
 export class ChatPage {
 
+  matches: string[];
+  isRecording= false;
+
   input: string = "";
+
+
 
   messages = new Array;
 
@@ -35,7 +44,43 @@ export class ChatPage {
   @ViewChild(Content) content: Content;
   //assistant = new ApiAiClient({accessToken: "3da16c80a8e44c2a9f3c98d49ff40d67"});
 
-  constructor(public viewCtrl: ViewController, public params: NavParams, public navCtrl: NavController, public recipesProvider: RecipesProvider/*private speechRecogition: SpeechRecognition*/) {
+  constructor(public viewCtrl: ViewController, public params: NavParams, public navCtrl: NavController, public recipesProvider: RecipesProvider, private speechRecognition: SpeechRecognition,private plt: Platform, private cd: ChangeDetectorRef) {
+
+  }
+
+
+ 
+  isIos() {
+    return this.plt.is('ios');
+  }
+ 
+  stopListening() {
+    this.speechRecognition.stopListening().then(() => {
+      this.isRecording = false;
+    });
+  }
+ 
+  getPermission() {
+    this.speechRecognition.hasPermission()
+      .then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecognition.requestPermission();
+        }
+      });
+  }
+ 
+  startListening() {
+    let options = {
+      language: 'en-US'
+    }
+    this.speechRecognition.startListening(options).subscribe(matches => {
+      this.matches = matches;
+      this.sendMessage(this.matches[0]);
+      this.cd.detectChanges();
+      this.scrollToBottom();
+    });
+    this.scrollToBottom();
+    this.isRecording = true;
 
   }
 

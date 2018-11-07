@@ -9,6 +9,7 @@ import { RecipesProvider } from '../../providers/recipes/recipes'
 @Component({
   selector: 'page-hello-ionic',
   templateUrl: 'hello-ionic.html'
+  
 })
 export class HelloIonicPage {
   selectedItem: any;
