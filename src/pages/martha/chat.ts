@@ -5,7 +5,8 @@ import { RecipesProvider } from '../../providers/recipes/recipes'
 import { Observable } from 'rxjs/Observable';
 import { ChangeDetectorRef } from '@angular/core';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
-
+import { TextToSpeech,TTSOptions } from '@ionic-native/text-to-speech';
+import { stringify } from '@angular/compiler/src/util';
 
 const client = new ApiAiClient({ accessToken: '80a4a758532947068f3787f95241b510' });
 const INTEND_ASK_FOR_SERVICE = "Ask for service";
@@ -45,12 +46,39 @@ export class ChatPage {
   @ViewChild(Content) content: Content;
   //assistant = new ApiAiClient({accessToken: "3da16c80a8e44c2a9f3c98d49ff40d67"});
 
-  constructor(public viewCtrl: ViewController, public params: NavParams, public navCtrl: NavController, public recipesProvider: RecipesProvider, private speechRecognition: SpeechRecognition,private plt: Platform, private cd: ChangeDetectorRef) {
+  constructor(public viewCtrl: ViewController, public params: NavParams, public navCtrl: NavController, public recipesProvider: RecipesProvider, private speechRecognition: SpeechRecognition,private plt: Platform, private cd: ChangeDetectorRef,
+    private textToSpeech: TextToSpeech) {
 
   }
 
 
- 
+  async sayText(text: string){
+    try{
+      const options: TTSOptions=
+      {
+        text,
+        rate:0.5
+      }
+      const speech=await this.textToSpeech.speak(options);
+    }
+    catch(e){
+      console.error(e);
+    } 
+
+  }
+  async stopSpeaking()
+  {
+    try{
+      await this.textToSpeech.stop();
+    }
+    catch(e){
+      console.error(e);
+
+    }
+  } 
+
+
+
   isIos() {
     return this.plt.is('ios');
   }
@@ -82,6 +110,8 @@ export class ChatPage {
     });
     this.scrollToBottom();
     this.isRecording = true;
+    this.input = '';
+    this.scrollToBottom();
 
   }
 
@@ -93,7 +123,9 @@ export class ChatPage {
 
     client.textRequest(input)
       .then((response) => {
-        this.responses.push(response);
+        this.sayText(response.result.fulfillment.speech);
+        console.log(response.result.fulfillment.speech);
+       this.responses.push(response);
         var str = response.result.fulfillment.speech;
         this.messages.push({ message: str, user: 'martha' });
         if (response.result.metadata.intentName == INTEND_SEARCH_BY_RECIPE_NAME) {
@@ -105,8 +137,10 @@ export class ChatPage {
             for (var i = 0; i < 3; i++) {
               str += (i + 1) + '. ' + this.temporalRecipes[i].title + '\n';
             }
+            
             this.messages.push({ message: str, user: 'martha' });
-            console.log(str);
+            this.sayText(str);
+     console.log(str);
             this.scrollToBottom();
           });
         }
@@ -116,6 +150,7 @@ export class ChatPage {
           console.log(this.temporalRecipe);
           str = 'These are the ingredients. Do you have them all?';
           this.messages.push({ message: str, user: 'martha' });
+          this.sayText(str);
           str='';
           this.recipesProvider.recipeInformation(this.temporalRecipe.id).then(info=>{
             var ingredients = info['extendedIngredients'];
@@ -124,6 +159,7 @@ export class ChatPage {
               str+= (i+1) + '. ' +ingredients[i].measures.metric.amount +' ' +ingredients[i].measures.metric.unitShort+' of '+ingredients[i].name +'\n';
             } 
             this.messages.push({ message: str, user: 'martha' });
+            this.sayText(str);
             this.scrollToBottom();
           });
          
@@ -133,6 +169,7 @@ export class ChatPage {
             this.temporalSteps = instructions[0].steps;
             str = this.temporalCurrentStep + 1 + '. ' + this.temporalSteps[this.temporalCurrentStep].step;
             this.messages.push({ message: str, user: 'martha' });
+            this.sayText(str);
             this.scrollToBottom();
           });
         }
@@ -141,9 +178,11 @@ export class ChatPage {
           if (this.temporalCurrentStep < this.temporalSteps.length) {
             str = this.temporalCurrentStep + 1 + '. ' + this.temporalSteps[this.temporalCurrentStep].step;
             this.messages.push({ message: str, user: 'martha' });
+            this.sayText(str);
           }
           else {
             this.messages.push({ message: 'You have finished!', user: 'martha' });
+            this.sayText(str);
           }
           this.scrollToBottom();
         }
@@ -159,6 +198,7 @@ export class ChatPage {
                 str += (i + 1) + '. ' + this.temporalRecipes[i].title + '\n';
               }
               this.messages.push({ message: str, user: 'martha' });
+              this.sayText(str);
             console.log(str);
             this.scrollToBottom();
             });
@@ -174,6 +214,7 @@ export class ChatPage {
             console.log(recipes);
             str ='Recipe name: '+recipes['results'][0].title;
             this.messages.push({ message: str, user: 'martha' });
+            this.sayText(str);
             str='';
             this.recipesProvider.recipeInformation(recipe_id).then(info => {
               var ingredients = info['extendedIngredients'];
@@ -181,6 +222,8 @@ export class ChatPage {
                 str+= (i+1) + '. ' +ingredients[i].measures.metric.amount +' ' +ingredients[i].measures.metric.unitShort+' of '+ingredients[i].name +'\n';
               } 
               this.messages.push({ message: str, user: 'martha' });
+              this.sayText(str);
+
             });
           });
           
@@ -195,6 +238,7 @@ export class ChatPage {
               str += (i + 1) + '. ' + recipes[i].title + '\n';
             }
             this.messages.push({ message: str, user: 'martha' });
+            this.sayText(str);
             console.log(str);
             this.scrollToBottom();
 
@@ -203,7 +247,7 @@ export class ChatPage {
         this.scrollToBottom();
       })
       .catch((error) => {/* do something here too */ })
-
+      this.input = '';
   }
 
   keyPressHandler(keyCode, m) {
