@@ -15,6 +15,7 @@ const INTEND_NUMBER_SELECTED = "Number selected";
 const INTEND_NEXT_STEP = "Next step";
 const INTEND_YES_CONFIRMATION = "YES confirmation";
 const INTEND_RECOMMEND_A_RECIPE = "Recommend a recipe";
+const INTEND_ASK_THE_INGREDIENTS_OF_A_RECIPE = "Ask the ingredients of a recipe";
 // import { SpeechRecognition } from '@ionic-native/speech-recognition'
 @Component({
   
@@ -92,7 +93,6 @@ export class ChatPage {
 
     client.textRequest(input)
       .then((response) => {
-        console.log(response);
         this.responses.push(response);
         var str = response.result.fulfillment.speech;
         this.messages.push({ message: str, user: 'martha' });
@@ -165,7 +165,25 @@ export class ChatPage {
           }
           
         }
-        else if (response.result.metadata.intentName == INTEND_ASK_FOR_SERVICE) {
+        else if (response.result.metadata.intentName == INTEND_ASK_THE_INGREDIENTS_OF_A_RECIPE) {
+          str='';
+          var recipe_name = response.result.parameters.food;
+          var recipe_id = 0;
+          this.recipesProvider.findRecipes(recipe_name).then(recipes=>{
+            recipe_id=recipes['results'][0].id;
+            console.log(recipes);
+            str ='Recipe name: '+recipes['results'][0].title;
+            this.messages.push({ message: str, user: 'martha' });
+            str='';
+            this.recipesProvider.recipeInformation(recipe_id).then(info => {
+              var ingredients = info['extendedIngredients'];
+              for(var i =0;i<ingredients.length;i++){
+                str+= (i+1) + '. ' +ingredients[i].measures.metric.amount +' ' +ingredients[i].measures.metric.unitShort+' of '+ingredients[i].name +'\n';
+              } 
+              this.messages.push({ message: str, user: 'martha' });
+            });
+          });
+          
         }
         else if (response.result.metadata.intentName == INTEND_SEARCH_BY_INGREDIENT_NAME) {
           var ingredients = response.result.parameters.ingredients;
