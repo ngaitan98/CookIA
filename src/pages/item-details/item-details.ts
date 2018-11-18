@@ -14,15 +14,24 @@ import { HelloIonicPage } from '../hello-ionic/hello-ionic';
 })
 export class ItemDetailsPage {
   selectedItem: any;
+  fav: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public modalCtrl: ModalController, private fireStore: AngularFirestore, private rp: RecipesProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
+    this.fav=navParams.get('faved');
   }
   presentMartha() {
     let profileModal = this.modalCtrl.create(ChatPage, { userId: 8675309, recipe: this.selectedItem });
     profileModal.present();
   }
+
+isFav(){
+  return this.fav;
+}
+
+
+
 
   addFavorita(id: number, nombre: string) {
     let priority = 5;
@@ -34,5 +43,6 @@ export class ItemDetailsPage {
         console.log("error")
       })
     priority++;
+  this.fav=true;  
   }
 }

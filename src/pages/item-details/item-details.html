@@ -37,11 +37,17 @@
                   {{selectedItem.aggregateLikes}}
             </button>
           </ion-col>
+  
           <ion-col col-5>
-            <button large ion-button icon-start item-end round small (click)="addFavorita(selectedItem.id, selectedItem.title)">
-             <ion-icon name="md-add-circle"></ion-icon> Fav This
-            </button>
-          </ion-col>
+              <button *ngIf="!isFav()"large ion-button icon-start item-end round small (click)="addFavorita(selectedItem.id, selectedItem.title)">
+               <ion-icon name="md-add-circle"></ion-icon> Fav This
+              </button>
+              <button *ngIf="isFav()"large ion-button icon-start item-end round small color="secondary">
+                  <ion-icon name="checkmark-circle"></ion-icon> Faved
+                 </button>
+
+            </ion-col>
+
           <ion-col col-1></ion-col>
         </ion-row>
       </ion-item-divider>
