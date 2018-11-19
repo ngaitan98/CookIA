@@ -57,7 +57,7 @@ export class ChatPage {
       const options: TTSOptions=
       {
         text,
-        rate:0.5
+        rate:1
       }
       const speech=await this.textToSpeech.speak(options);
     }
@@ -219,7 +219,8 @@ export class ChatPage {
             this.recipesProvider.recipeInformation(recipe_id).then(info => {
               var ingredients = info['extendedIngredients'];
               for(var i =0;i<ingredients.length;i++){
-                str+= (i+1) + '. ' +ingredients[i].measures.metric.amount +' ' +ingredients[i].measures.metric.unitShort+' of '+ingredients[i].name +'\n';
+                str+= (i+1) + '. ' +ingredients[i].measures.us.amount +' ' +ingredients[i].measures.us.unitLong+' of '+ingredients[i].name +'\n';
+                console.log(ingredients[i].measures.us.amount);
               } 
               this.messages.push({ message: str, user: 'martha' });
               this.sayText(str);
