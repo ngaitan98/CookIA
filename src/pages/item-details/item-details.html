@@ -5,7 +5,7 @@
     </button>
     <ion-title>{{selectedItem.title}}</ion-title>
   </ion-navbar>
-    <ion-searchbar></ion-searchbar>
+  <ion-searchbar></ion-searchbar>
 </ion-header>
 <ion-content>
   <ion-grid>
@@ -13,21 +13,15 @@
       <img src="{{selectedItem.image}}" style="width:75%">
     </h3>
     <ion-row>
-      <ion-col col-5>
-         <button ion-button (click)="addFavorita(selectedItem.id, selectedItem.title)"  >
-          add to favorites
-    <ion-icon name="add-circle"></ion-icon>
-        </button>
-      </ion-col>
       <ion-col col-10>
         <h3> Ingredients:</h3>
-        <p *ngFor = "let ingredient of selectedItem.extendedIngredients">
+        <p *ngFor="let ingredient of selectedItem.extendedIngredients">
           - {{ingredient.amount}} {{ingredient.unit}} of {{ingredient.name}}
         </p>
         <h3>
           Preparation:
         </h3>
-        <p *ngFor = "let step of selectedItem.analyzedInstructions[0].steps">
+        <p *ngFor="let step of selectedItem.analyzedInstructions[0].steps">
           {{step.step}}
         </p>
       </ion-col>
@@ -37,13 +31,23 @@
       <ion-item-divider color="light">
         <ion-row>
           <ion-col col-1></ion-col>
-          <ion-col col-10>
-            <button ion-button icon-start clear small>
-              <ion-icon name="thumbs-up"></ion-icon>
-              <div>{{selectedItem.aggregateLikes}} Likes</div>
-    
+          <ion-col col-5>
+            <button ion-button icon-start round small item-start> 
+                <ion-icon name="md-thumbs-up"></ion-icon>
+                  {{selectedItem.aggregateLikes}}
             </button>
           </ion-col>
+  
+          <ion-col col-5>
+              <button *ngIf="!isFav()"large ion-button icon-start item-end round small (click)="addFavorita(selectedItem.id, selectedItem.title)">
+               <ion-icon name="md-add-circle"></ion-icon> Fav This
+              </button>
+              <button *ngIf="isFav()"large ion-button icon-start item-end round small color="secondary">
+                  <ion-icon name="checkmark-circle"></ion-icon> Faved
+                 </button>
+
+            </ion-col>
+
           <ion-col col-1></ion-col>
         </ion-row>
       </ion-item-divider>

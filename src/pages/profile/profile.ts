@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PopoverController, Item, GESTURE_ITEM_SWIPE } from 'ionic-angular';
+import { PopoverController, Item, GESTURE_ITEM_SWIPE, NavController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { ChatPage } from '../martha/chat'
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument,  } from 'angularfire2/firestore';
@@ -7,6 +7,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument,
 
 import { RecipesProvider } from '../../providers/recipes/recipes';
 import { Observable } from  'rxjs/Observable';
+import { ItemDetailsPage } from '../item-details/item-details';
+import { identifierModuleUrl } from '@angular/compiler';
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html'
@@ -38,14 +40,12 @@ export class ProfilePage {
   nombres_recetas: any[];
   favoritasTitulo: receta_titulo[];
 
+  ///nuevas//////
+data2:any;  
 
-
-
-  constructor(public popoverCtrl: PopoverController,public modalCtrl: ModalController,private fireStore: AngularFirestore,private rp: RecipesProvider ) { 
-
-    
-
-    }
+  constructor(public navCtrl: NavController,public popoverCtrl: PopoverController,public modalCtrl: ModalController,
+    private fireStore: AngularFirestore,private rp: RecipesProvider ) { 
+ }
   
   ionViewDidEnter(){
   this.personaCollection = this.fireStore.collection('usuarios');
@@ -130,6 +130,35 @@ console.error(err);
 })
 }
 
+spoon(id:number)
+{
+
+  //this.rp.recipeInformation(recipeId);
+  this.rp.recipeInformation(id)
+  .then(recipes => {
+    this.data2 = recipes;
+ 
+      this.navCtrl.push(ItemDetailsPage, {
+        item: this.data2,
+        faved: true
+      });
+    
+    console.log(this.data2);
+  });
+
+  console.log(this.data2);
+ // this.navCtrl.push(ItemDetailsPage, {
+   // item:this.data2
+  //});
+
+
+  //this.rp.randomRecipes()
+ // .then(recipes => {
+  //  this.data2 = recipes;
+   // console.log(this.data2);
+  ///});
+
+}
 
   presentMartha() {
     let profileModal = this.modalCtrl.create(ChatPage, { userId: 8675309 });
@@ -191,7 +220,7 @@ function_whatever(id: number){
         this.titulo= this.data.title;
         console.log(this.titulo);
           });
-         console.log("fuck off"); 
+         console.log("off"); 
     
   }
 

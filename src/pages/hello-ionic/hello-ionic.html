@@ -38,10 +38,25 @@
     </ion-card-content>
     <ion-row>
       <ion-col>
-        <button ion-button icon-start clear small>
-          <ion-icon name="thumbs-up"></ion-icon>
-          <div>{{recipe.aggregateLikes}} Likes</div>
-        </button>
+        <ion-row no-padding>
+          <ion-col>
+            <button ion-button clear small color icon-start>
+              <ion-badge item-end>
+                <ion-icon name="md-thumbs-up"></ion-icon>
+                {{recipe.aggregateLikes}}
+              </ion-badge>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button clear small color icon-start (click) = "startRecipe($event, recipe)">
+              <ion-badge item-end>
+                <ion-icon name = "person"></ion-icon>  
+                Start Cooking
+              </ion-badge>
+            </button>
+          </ion-col>
+
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-card>

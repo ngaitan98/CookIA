@@ -27,22 +27,57 @@
       
      </ion-list>
 
-     <button ion-button icon-only (click)="canReorder = !canReorder">
-sort recipes
+    <ion-list >
+        <ion-item-divider small color="light">
+    <ion-row row-1>
+            <ion-col col-4>
 
-     </button>
 
-      <h3>Favourite recipes</h3>
+                <button ion-button icon-only  color="light" (click)="canReorder = !canReorder">
+                    sort
+                    <ion-icon name="aperture"> </ion-icon>
+                         </button>
+            </ion-col>
+      <ion-col col-3></ion-col>
+
+            <ion-col col-5>
+              <h3></h3>
+              
+             <h3>FAVORITES</h3>
+  
+              </ion-col>
+
+            </ion-row>
+          
+            </ion-item-divider>
+          </ion-list>
+            
+         
        
       <ion-list reorder="{{ canReorder }}" (ionItemReorder)="reorderItems($event)" > 
         <ion-item-sliding *ngFor="let item of favoritas">
          
-          <ion-item  > 
+          <ion-item >  
               {{item.nombre}}
-          
-           
+        
       </ion-item >
-<ion-item-options side="right">
+      <ion-item-options >
+     
+            
+<!-- You will not be able to see <button ion-button (click)="itemTapped($event, item)">  this text. -->
+
+
+              <button ion-button (click)="spoon(item.id)" > 
+            Show
+
+            <ion-icon name="add-circle">
+
+            </ion-icon>
+          </button>
+        </ion-item-options>    
+
+
+<ion-item-options side="left">
   <button  (click)="delete(item.id_2)">
     <ion-icon name="md-trash">
     </ion-icon>
@@ -51,8 +86,6 @@ sort recipes
 </ion-item-options>
           </ion-item-sliding>
        </ion-list>
-
-       <button  (click)="addFavorita(738091)"> Add Favourite </button>
 
 </ion-content>
 <ion-footer>
@@ -63,5 +96,6 @@ sort recipes
     <button ion-button (click) = "presentMartha()" float-right clear>
       <ion-icon name="md-chatboxes"></ion-icon>
     </button>
+   
   </ion-navbar>
 </ion-footer>

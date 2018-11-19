@@ -5,11 +5,12 @@ import { RecipesProvider } from '../../providers/recipes/recipes'
 import { Observable } from 'rxjs/Observable';
 import { ChangeDetectorRef } from '@angular/core';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
-import { TextToSpeech,TTSOptions } from '@ionic-native/text-to-speech';
+import { TextToSpeech, TTSOptions } from '@ionic-native/text-to-speech';
 import { stringify } from '@angular/compiler/src/util';
 
 const client = new ApiAiClient({ accessToken: '80a4a758532947068f3787f95241b510' });
 const INTEND_ASK_FOR_SERVICE = "Ask for service";
+const START_RECIPE = "Start recipe";
 const INTEND_SEARCH_BY_RECIPE_NAME = "Search by recipe name";
 const INTEND_SEARCH_BY_INGREDIENT_NAME = "Search by ingredient name";
 const INTEND_NUMBER_SELECTED = "Number selected";
@@ -17,16 +18,15 @@ const INTEND_NEXT_STEP = "Next step";
 const INTEND_YES_CONFIRMATION = "YES confirmation";
 const INTEND_RECOMMEND_A_RECIPE = "Recommend a recipe";
 const INTEND_ASK_THE_INGREDIENTS_OF_A_RECIPE = "Ask the ingredients of a recipe";
-// import { SpeechRecognition } from '@ionic-native/speech-recognition'
 @Component({
-  
+
   selector: "page-chat",
   templateUrl: 'martha.html'
 })
 export class ChatPage {
 
   matches: string[];
-  isRecording= false;
+  isRecording = false;
 
   input: string = "";
 
@@ -43,52 +43,53 @@ export class ChatPage {
   temporalSteps = new Array;
 
   temporalCurrentStep = 0;
+
   @ViewChild(Content) content: Content;
   //assistant = new ApiAiClient({accessToken: "3da16c80a8e44c2a9f3c98d49ff40d67"});
 
-  constructor(public viewCtrl: ViewController, public params: NavParams, public navCtrl: NavController, public recipesProvider: RecipesProvider, private speechRecognition: SpeechRecognition,private plt: Platform, private cd: ChangeDetectorRef,
+  constructor(public viewCtrl: ViewController, public params: NavParams, public navCtrl: NavController, public recipesProvider: RecipesProvider, private speechRecognition: SpeechRecognition, private plt: Platform, private cd: ChangeDetectorRef,
     private textToSpeech: TextToSpeech) {
-
+    this.temporalRecipe = params.get('recipe');
+    this.startRecipe();
+    console.log(this.temporalRecipe)
   }
 
-
-  async sayText(text: string){
-    try{
-      const options: TTSOptions=
+  async sayText(text: string) {
+    try {
+      const options: TTSOptions =
       {
         text,
         rate:1
       }
-      const speech=await this.textToSpeech.speak(options);
+      const speech = await this.textToSpeech.speak(options);
     }
-    catch(e){
+    catch (e) {
       console.error(e);
-    } 
+    }
 
   }
-  async stopSpeaking()
-  {
-    try{
+  async stopSpeaking() {
+    try {
       await this.textToSpeech.stop();
     }
-    catch(e){
+    catch (e) {
       console.error(e);
 
     }
-  } 
+  }
 
 
 
   isIos() {
     return this.plt.is('ios');
   }
- 
+
   stopListening() {
     this.speechRecognition.stopListening().then(() => {
       this.isRecording = false;
     });
   }
- 
+
   getPermission() {
     this.speechRecognition.hasPermission()
       .then((hasPermission: boolean) => {
@@ -97,7 +98,7 @@ export class ChatPage {
         }
       });
   }
- 
+
   startListening() {
     let options = {
       language: 'en-US'
@@ -125,22 +126,22 @@ export class ChatPage {
       .then((response) => {
         this.sayText(response.result.fulfillment.speech);
         console.log(response.result.fulfillment.speech);
-       this.responses.push(response);
+        this.responses.push(response);
         var str = response.result.fulfillment.speech;
         this.messages.push({ message: str, user: 'martha' });
         if (response.result.metadata.intentName == INTEND_SEARCH_BY_RECIPE_NAME) {
           var food = response.result.parameters.food_list;
-          this.recipesProvider.findRecipes(food).then( recipes => {
+          this.recipesProvider.findRecipes(food).then(recipes => {
             str = 'Please choose a number:\n';
-            
+
             this.temporalRecipes = recipes['results'];
             for (var i = 0; i < 3; i++) {
-              str += (i + 1) + '. ' + this.temporalRecipes[i].title + '\n';
+              str += (i + 1) + '. ' + this.temporalRecipes[i].title + '<br/>';
             }
-            
+
             this.messages.push({ message: str, user: 'martha' });
             this.sayText(str);
-     console.log(str);
+            console.log(str);
             this.scrollToBottom();
           });
         }
@@ -151,20 +152,20 @@ export class ChatPage {
           str = 'These are the ingredients. Do you have them all?';
           this.messages.push({ message: str, user: 'martha' });
           this.sayText(str);
-          str='';
-          this.recipesProvider.recipeInformation(this.temporalRecipe.id).then(info=>{
+          str = '';
+          this.recipesProvider.recipeInformation(this.temporalRecipe.id).then(info => {
             var ingredients = info['extendedIngredients'];
             console.log(ingredients);
-            for(var i =0;i<ingredients.length;i++){
-              str+= (i+1) + '. ' +ingredients[i].measures.metric.amount +' ' +ingredients[i].measures.metric.unitShort+' of '+ingredients[i].name +'\n';
-            } 
+            for (var i = 0; i < ingredients.length; i++) {
+              str += (i + 1) + '. ' + ingredients[i].measures.metric.amount + ' ' + ingredients[i].measures.metric.unitShort + ' of ' + ingredients[i].name + '<br/>';
+            }
             this.messages.push({ message: str, user: 'martha' });
             this.sayText(str);
             this.scrollToBottom();
           });
-         
+
         }
-        else if(response.result.metadata.intentName == INTEND_YES_CONFIRMATION){
+        else if (response.result.metadata.intentName == INTEND_YES_CONFIRMATION) {
           this.recipesProvider.recipeInstructions(this.temporalRecipe.id).then(instructions => {
             this.temporalSteps = instructions[0].steps;
             str = this.temporalCurrentStep + 1 + '. ' + this.temporalSteps[this.temporalCurrentStep].step;
@@ -187,8 +188,8 @@ export class ChatPage {
           this.scrollToBottom();
         }
         else if (response.result.metadata.intentName == INTEND_RECOMMEND_A_RECIPE) {
-          if(response.result.parameters.food_type !== ""){
-            var tipo = 'type='+response.result.parameters.food_type;
+          if (response.result.parameters.food_type !== "") {
+            var tipo = 'type=' + response.result.parameters.food_type;
             this.recipesProvider.filteredRandomRecipes([tipo]).then(recipes => {
               console.log(recipes['recipes']);
               str = 'Please choose a number:\n';
@@ -199,35 +200,34 @@ export class ChatPage {
               }
               this.messages.push({ message: str, user: 'martha' });
               this.sayText(str);
-            console.log(str);
-            this.scrollToBottom();
+              console.log(str);
+              this.scrollToBottom();
             });
           }
-          
+
         }
         else if (response.result.metadata.intentName == INTEND_ASK_THE_INGREDIENTS_OF_A_RECIPE) {
-          str='';
+          str = '';
           var recipe_name = response.result.parameters.food;
           var recipe_id = 0;
-          this.recipesProvider.findRecipes(recipe_name).then(recipes=>{
-            recipe_id=recipes['results'][0].id;
+          this.recipesProvider.findRecipes(recipe_name).then(recipes => {
+            recipe_id = recipes['results'][0].id;
             console.log(recipes);
-            str ='Recipe name: '+recipes['results'][0].title;
+            str = 'Recipe name: ' + recipes['results'][0].title;
             this.messages.push({ message: str, user: 'martha' });
             this.sayText(str);
-            str='';
+            str = '';
             this.recipesProvider.recipeInformation(recipe_id).then(info => {
               var ingredients = info['extendedIngredients'];
-              for(var i =0;i<ingredients.length;i++){
-                str+= (i+1) + '. ' +ingredients[i].measures.us.amount +' ' +ingredients[i].measures.us.unitLong+' of '+ingredients[i].name +'\n';
-                console.log(ingredients[i].measures.us.amount);
-              } 
+              for (var i = 0; i < ingredients.length; i++) {
+                str += (i + 1) + '. ' + ingredients[i].measures.metric.amount + ' ' + ingredients[i].measures.metric.unitShort + ' of ' + ingredients[i].name + '\n';
+              }
               this.messages.push({ message: str, user: 'martha' });
               this.sayText(str);
 
             });
           });
-          
+
         }
         else if (response.result.metadata.intentName == INTEND_SEARCH_BY_INGREDIENT_NAME) {
           var ingredients = response.result.parameters.ingredients;
@@ -248,7 +248,7 @@ export class ChatPage {
         this.scrollToBottom();
       })
       .catch((error) => {/* do something here too */ })
-      this.input = '';
+    this.input = '';
   }
 
   keyPressHandler(keyCode, m) {
@@ -269,5 +269,28 @@ export class ChatPage {
 
   close() {
     this.navCtrl.pop();
+  }
+  startRecipe() {
+    if (this.temporalRecipe !== undefined) {
+      client.textRequest("Hi").then((response) => {
+        client.textRequest("I want to cook pizza").then((response) => {
+          client.textRequest("1.").then((response) => {
+          });
+        });
+      });
+      var str = "Hi! I'm Martha. I will help you cooking " + this.temporalRecipe.title + ". Let's start! ";
+      str += 'These are the ingredients we will need. Do you have them all?';
+      this.messages.push({ message: str, user: 'martha' });
+      this.sayText(str);
+      str = '';
+      var ingredients = this.temporalRecipe['extendedIngredients'];
+      console.log(ingredients);
+      for (var i = 0; i < ingredients.length; i++) {
+        str += (i + 1) + '. ' + ingredients[i].measures.metric.amount + ' ' + ingredients[i].measures.metric.unitShort + ' of ' + ingredients[i].name;
+      }
+      this.messages.push({ message: str, user: 'martha' });
+      this.sayText(str);
+      this.scrollToBottom();
+    }
   }
 }

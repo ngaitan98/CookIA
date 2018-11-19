@@ -70,4 +70,8 @@ export class HelloIonicPage {
   filterSearchPreparationTime(minutes: number, search: string) {
     return this.recipesProvider.filterSearchByPreparationTime(minutes, this.recipesProvider.findRecipes(search));
   }
+  startRecipe(event, item){
+    let profileModal = this.modalCtrl.create(ChatPage, { userId: 8675309,  recipe: item});
+    profileModal.present();
+  }
 }
